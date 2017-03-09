@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Od34.Models;
 
 namespace Od34.Controllers
 {
@@ -10,7 +11,9 @@ namespace Od34.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            List<PostModel> posts = new List<PostModel>();
+            posts = PostModel.GetAllPosts();
+            return View(posts);
         }
 
         public ActionResult About()

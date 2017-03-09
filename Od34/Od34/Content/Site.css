@@ -1,6 +1,19 @@
-﻿body {
-    padding-top: 50px;
+﻿@font-face {
+font-family: AntiqueOlive; 
+src: url(../fonts/AntiqueOlive.ttf);
+}
+
+html {
+  font-size: 100%;
+}
+
+
+body {
+    padding-top: 152px;
     padding-bottom: 20px;
+    font-family: AntiqueOlive, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    background-color: rgb(238, 238, 240);
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -8,6 +21,32 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
+header {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #ffffff;
+    height: 152px;
+}
+
+.headerContent {
+    position: relative;
+    z-index: 1;
+    width: 1232px;
+    padding: 45px 16px 0;
+    margin: 0 auto;
+}
+
+h1{
+    text-transform: uppercase;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: 24px;
+}
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -21,4 +60,82 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.navbar {
+    text-transform: uppercase;
+    font-size: .8125em;    
+}
+
+.navbar-default {
+    background-color: white;
+    border-color: white;
+}
+
+.navbar-default .navbar-nav > li:focus {
+    border-bottom: 10px solid red;
+}
+
+.navbar-fixed-top {    
+    box-shadow: 0 0 5px;
+}
+
+.navbar-collapse{
+    padding-right:0px;
+    padding-left:0px;
+}
+
+.btn {
+    border-radius:0px;
+    font-size: .875em;
+}
+
+.btn-default {    
+    padding: 0 16px;
+    border: 1px solid #cc0001;
+    text-decoration: none;
+    line-height: 38px;
+    color: #cc0001;
+    background-color: rgb(238, 238, 240)
+}
+
+.btn-default:hover{
+    border-color: #e60001;
+    color: #ffffff;
+    background: #e60001;
+}
+
+a{
+    color: #cc0001;    
+}
+
+a:visited {
+    color: #cc0001;
+}
+
+.fbk {
+    position: relative;
+    overflow: hidden;
+    width: 386px;
+    height: 0;
+    padding: 34px 0 0;
+    margin: 0 0 28px;
+    background: url(../images/sprites.9b0db1c44e99.png) no-repeat 0 0;
+    font-size: 0;
+    line-height: 100px;
+}
+
+.fbk a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    padding: 34px 0 0;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1232px;
+    }
 }
