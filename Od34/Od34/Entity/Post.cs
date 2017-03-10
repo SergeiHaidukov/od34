@@ -13,7 +13,7 @@ namespace Od34.Entity
         public virtual string description { get; set; }
         public virtual string meta_description { get; set; }
         public virtual string post_body { get; set; }
-        //public virtual DateTime dbcreate { get; set; }
+        public virtual DateTime dbcreate { get; set; }
         public virtual Int32 status { get; set; }
     }
 }

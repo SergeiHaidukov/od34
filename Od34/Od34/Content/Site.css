@@ -16,7 +16,6 @@ body {
     background-color: rgb(238, 238, 240);
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -47,15 +46,10 @@ h1{
     font-size: 24px;
 }
 
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
@@ -96,7 +90,7 @@ textarea {
     text-decoration: none;
     line-height: 38px;
     color: #cc0001;
-    background-color: rgb(238, 238, 240)
+    background-color: rgb(238, 238, 240);
 }
 
 .btn-default:hover{
@@ -133,6 +127,37 @@ a:visited {
     width: 100%;
     padding: 34px 0 0;
 }
+
+.unit {        
+    padding: 0px 5px 0px;
+    margin: 20px 0px 0;    
+}
+
+.unit-in{
+    background: #ffffff;
+    padding-bottom: 48px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.unitImageHolder{
+
+}
+
+.unit h1{
+
+}
+
+time {
+    display: block;
+    color: #8c8c91;
+    font-size: .625em;
+    text-transform: uppercase;
+    line-height: 1.25em;
+}
+
+
 
 @media (min-width: 1200px) {
     .container {

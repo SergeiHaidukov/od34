@@ -3,6 +3,32 @@
 @{
     ViewBag.Title = "_PostItem";
 }
+@section Styles {
+    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" type="text/css" />
+}
+<div class="unit col-md-8">
+    <a href="/blog/post/305/" class="unitImageHolder">
+        <img class="img-responsive" src="https://md.fbk.info/media/cache/7b/c3/7bc367623b2e166c3092b91b6ef93724.jpg" alt="">
+    </a>
+    <div class="unit-in">        
+        <time>@Model.dbcreate.ToString("dd MMMM yyyy HH:mm")</time>
+        <h1>@Model.title</h1>
+        <p>
+            @Model.post_body
+        </p>        
+    </div>
+</div>
 
-
+<div class="unit col-md-4">
+    <a href="/blog/post/305/" class="unitImageHolder">
+        <img class="img-responsive" src="https://md.fbk.info/media/cache/7b/c3/7bc367623b2e166c3092b91b6ef93724.jpg" alt="">
+    </a>
+    <div class="unit-in">
+        <time>@Model.dbcreate.ToString("dd MMMM yyyy HH:mm")</time>
+        <h1>@Model.title</h1>
+        <p>
+            @Model.post_body
+        </p>
+    </div>
+</div>
 
