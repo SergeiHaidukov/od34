@@ -47,7 +47,9 @@
                 @Html.ValidationMessageFor(model => model.meta_description, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
+        @Html.Action("HtmlEditorPartial")
+        
         <div class="form-group">
             @Html.LabelFor(model => model.post_body, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

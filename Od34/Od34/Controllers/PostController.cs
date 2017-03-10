@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -103,5 +104,51 @@ namespace Od34.Controllers
                 return View();
             }
         }
+
+        public ActionResult HtmlEditorPartial()
+        {
+            return PartialView("_HtmlEditorPartial");
+        }
+        public ActionResult HtmlEditorPartialImageSelectorUpload()
+        {
+            HtmlEditorExtension.SaveUploadedImage("HtmlEditor", PostControllerHtmlEditorSettings.ImageSelectorSettings);
+            return null;
+        }
+        public ActionResult HtmlEditorPartialImageUpload()
+        {
+            HtmlEditorExtension.SaveUploadedFile("HtmlEditor", PostControllerHtmlEditorSettings.ImageUploadValidationSettings, PostControllerHtmlEditorSettings.ImageUploadDirectory);
+            return null;
+        }
     }
+    public class PostControllerHtmlEditorSettings
+    {
+        public const string ImageUploadDirectory = "~/Content/UploadImages/";
+        public const string ImageSelectorThumbnailDirectory = "~/Content/Thumb/";
+
+        public static DevExpress.Web.UploadControlValidationSettings ImageUploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
+        {
+            AllowedFileExtensions = new string[] { ".jpg", ".jpeg", ".jpe", ".gif", ".png" },
+            MaxFileSize = 4000000
+        };
+
+        static DevExpress.Web.Mvc.MVCxHtmlEditorImageSelectorSettings imageSelectorSettings;
+        public static DevExpress.Web.Mvc.MVCxHtmlEditorImageSelectorSettings ImageSelectorSettings
+        {
+            get
+            {
+                if (imageSelectorSettings == null)
+                {
+                    imageSelectorSettings = new DevExpress.Web.Mvc.MVCxHtmlEditorImageSelectorSettings(null);
+                    imageSelectorSettings.Enabled = true;
+                    imageSelectorSettings.UploadCallbackRouteValues = new { Controller = "Post", Action = "HtmlEditorPartialImageSelectorUpload" };
+                    imageSelectorSettings.CommonSettings.RootFolder = ImageUploadDirectory;
+                    imageSelectorSettings.CommonSettings.ThumbnailFolder = ImageSelectorThumbnailDirectory;
+                    imageSelectorSettings.CommonSettings.AllowedFileExtensions = new string[] { ".jpg", ".jpeg", ".jpe", ".gif" };
+                    imageSelectorSettings.UploadSettings.Enabled = true;
+                }
+                return imageSelectorSettings;
+            }
+        }
+    }
+
 }
