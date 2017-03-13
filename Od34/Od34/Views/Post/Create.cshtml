@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Post</h4>
         <hr />
@@ -32,6 +32,36 @@
             </div>
         </div>
 
+        @*@Html.DevExpress().UploadControl(settings =>
+            {
+                settings.Name = "UploadControl";
+                settings.ShowAddRemoveButtons = true;
+                settings.ShowProgressPanel = true;
+                settings.ShowClearFileSelectionButton = true;
+                settings.ShowUploadButton = true;
+                settings.Size = 30;
+            }).GetHtml()*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.header_image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DevExpress().UploadControl(settings =>
+            {
+                settings.Name = "UploadControl";
+                //settings.CallbackRouteValues = new { Controller = "Post", Action = "UploadControlUpload" };
+
+                //settings.UploadMode = UploadControlUploadMode.Standard;
+
+                settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                //settings.AdvancedModeSettings.EnableMultiSelect = false;
+
+                settings.ShowUploadButton = false;
+                settings.ShowProgressPanel = false;
+
+                settings.ValidationSettings.Assign(Od34.Controllers.PostControllerUploadControlSettings.UploadValidationSettings);
+            }).GetHtml()
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -47,9 +77,14 @@
                 @Html.ValidationMessageFor(model => model.meta_description, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-        @Html.Action("HtmlEditorPartial")
-        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.post_body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Action("HtmlEditorPartial")
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.post_body, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

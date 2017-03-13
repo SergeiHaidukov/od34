@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Od34.Models;
+using System.IO;
+using DevExpress.Web;
 
 namespace Od34.Controllers
 {
@@ -38,12 +40,26 @@ namespace Od34.Controllers
             {
                 PostModel post = new PostModel();
 
-                post._post_entity.title = Request.Form["title"];
-                post._post_entity.meta_title = Request.Form["meta_title"];
-                post._post_entity.description = Request.Form["description"];
-                post._post_entity.meta_description = Request.Form["meta_description"];
-                post._post_entity.post_body = Request.Form["post_body"];
-                post._post_entity.status = Convert.ToInt32(Request.Form["status"]);
+
+                UploadedFile[] up_files = UploadControlExtension.GetUploadedFiles("UploadControl", PostControllerUploadControlSettings.UploadValidationSettings);
+
+                if (up_files[0].IsValid)
+                {
+                    // Save uploaded file to some location
+                    string file_name = Guid.NewGuid().ToString("N") + Path.GetExtension(up_files[0].FileName);
+                    string file_path = System.Web.HttpContext.Current.Server.MapPath("~/Content/UploadImages/");
+                    string file_full_path = file_path + file_name;
+                    up_files[0].SaveAs(file_full_path);
+                    post._post_entity.header_image = file_name;
+                }
+
+                post._post_entity.title = collection["title"];
+                post._post_entity.meta_title = collection["meta_title"];                         
+                post._post_entity.description = collection["description"];
+                post._post_entity.meta_description = collection["meta_description"];
+                post._post_entity.post_body = HtmlEditorExtension.GetHtml("HtmlEditor");
+                post._post_entity.dbcreate = DateTime.Now;
+                post._post_entity.status = Convert.ToInt32(collection["status"]);                
 
                 post.ModifyPost();
 
@@ -119,7 +135,34 @@ namespace Od34.Controllers
             HtmlEditorExtension.SaveUploadedFile("HtmlEditor", PostControllerHtmlEditorSettings.ImageUploadValidationSettings, PostControllerHtmlEditorSettings.ImageUploadDirectory);
             return null;
         }
+
+        public ActionResult UploadControlUpload()
+        {
+            UploadControlExtension.GetUploadedFiles("UploadControl", PostControllerUploadControlSettings.UploadValidationSettings, PostControllerUploadControlSettings.FileUploadComplete);
+            return null;
+        }
     }
+    public class PostControllerUploadControlSettings
+    {
+        public static DevExpress.Web.UploadControlValidationSettings UploadValidationSettings = new DevExpress.Web.UploadControlValidationSettings()
+        {
+            AllowedFileExtensions = new string[] { ".jpg", ".jpeg" },
+            MaxFileSize = 4000000
+        };
+        public static void FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
+        {
+            if (e.UploadedFile.IsValid)
+            {
+                // Save uploaded file to some location
+                string file_name = Guid.NewGuid().ToString("N") + Path.GetExtension(e.UploadedFile.FileName);
+                string file_path = HttpContext.Current.Server.MapPath("~/Content/UploadImages/");
+                string file_full_path = file_path + file_name;                
+                e.UploadedFile.SaveAs(file_full_path, false);
+                e.CallbackData = file_name;
+            }
+        }
+    }
+
     public class PostControllerHtmlEditorSettings
     {
         public const string ImageUploadDirectory = "~/Content/UploadImages/";

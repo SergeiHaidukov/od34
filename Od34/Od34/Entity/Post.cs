@@ -10,6 +10,7 @@ namespace Od34.Entity
         public virtual Guid id_post { get; set; }
         public virtual string title { get; set; }
         public virtual string meta_title { get; set; }
+        public virtual string header_image { get; set; }
         public virtual string description { get; set; }
         public virtual string meta_description { get; set; }
         public virtual string post_body { get; set; }
