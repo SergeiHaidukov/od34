@@ -22,6 +22,10 @@ namespace Od34.Models
             _post_entity = post_entity;
         }
 
+        /// <summary>
+        /// Возвращает все посты
+        /// </summary>
+        /// <returns></returns>
         public static List<PostModel> GetAllPosts()
         {
             List<PostModel> posts = new List<PostModel>();
@@ -41,6 +45,28 @@ namespace Od34.Models
                 return null;            
         }
 
+        /// <summary>
+        /// Возвращает модель по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static PostModel GetPostById(Guid? id)
+        {
+            PostModel pm;
+            if(DB.Connect())
+            {
+                pm = new PostModel(DB.conn.Get<Entity.Post>(id));
+                return pm;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Сохраняет или обновляет пост
+        /// </summary>
         public void ModifyPost()
         {
             if(_post_entity.id_post == new Guid())

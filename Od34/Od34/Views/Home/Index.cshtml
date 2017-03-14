@@ -3,7 +3,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row">
+<div class="row row-flex">
     @foreach (Od34.Models.PostModel post in Model)
     {
         @Html.Partial("_PostItem", post._post_entity);

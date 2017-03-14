@@ -1,11 +1,11 @@
 ﻿@model Od34.Entity.Post
+@using Od34.Controllers;
 
 @{
-    
-    ViewBag.Title = "Create";        
+    ViewBag.Title = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
@@ -15,6 +15,13 @@
         <h4>Post</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id_post, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <h5>@Model.id_post</h5>
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,6 +48,13 @@
                 settings.ShowUploadButton = true;
                 settings.Size = 30;
             }).GetHtml()*@
+        
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+                <img class="img-responsive img-thumbnail" src="~/Content/UploadImages/@Model.header_image" />
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.header_image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -56,8 +70,6 @@
 
                 settings.ShowUploadButton = false;
                 settings.ShowProgressPanel = false;
-
-                
 
                 settings.ValidationSettings.Assign(Od34.Controllers.PostControllerUploadControlSettings.UploadValidationSettings);
             }).GetHtml()
@@ -83,17 +95,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.post_body, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Action("HtmlEditorPartial")
+                @Html.DevExpress().HtmlEditor(settings =>
+           {
+               settings.Name = "HtmlEditor";
+               settings.CallbackRouteValues = new { Controller = "Post", Action = "HtmlEditorPartial" };
+               settings.Width = 980;
+               settings.ToolbarMode = HtmlEditorToolbarMode.Menu;
+
+               settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadCallbackRouteValues = new { Controller = "Post", Action = "HtmlEditorPartialImageUpload" };
+               settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadFolder = PostControllerHtmlEditorSettings.ImageUploadDirectory;
+               settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.ValidationSettings.Assign(PostControllerHtmlEditorSettings.ImageUploadValidationSettings);
+
+               settings.Html = Model.post_body;
+               settings.SettingsDialogs.InsertImageDialog.SettingsImageSelector.Assign(PostControllerHtmlEditorSettings.ImageSelectorSettings);
+           }).GetHtml()
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.post_body, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.post_body, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.post_body, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -105,7 +122,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>

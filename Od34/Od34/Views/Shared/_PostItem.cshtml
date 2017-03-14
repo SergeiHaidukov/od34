@@ -4,31 +4,35 @@
     ViewBag.Title = "_PostItem";
 }
 @section Styles {
-    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/site.css")" rel="stylesheet" type="text/css" />
 }
-<div class="unit col-md-8">
-    <a href="/blog/post/305/" class="unitImageHolder">
-        <img class="img-responsive" src="https://md.fbk.info/media/cache/7b/c3/7bc367623b2e166c3092b91b6ef93724.jpg" alt="">
-    </a>
-    <div class="unit-in">        
-        <time>@Model.dbcreate.ToString("dd MMMM yyyy HH:mm")</time>
-        <h1>@Model.title</h1>
-        <p>
-            @Model.post_body
-        </p>        
+<div class="unit-out col-md-8">
+    <div class="unit">
+        <a href="/post/edit/@Model.id_post" class="unitImageHolder">
+            <img class="img-responsive" src="~/Content/UploadImages/@Model.header_image" alt="">
+        </a>
+        <div class="unit-in2x">
+            <time>@Model.dbcreate.ToString("dd MMMM yyyy HH:mm")</time>
+            <h1>@Model.title</h1>
+            <p>
+                @Html.Raw(Model.post_body)
+            </p>
+        </div>
     </div>
 </div>
 
-<div class="unit col-md-4">
-    <a href="/blog/post/305/" class="unitImageHolder">
-        <img class="img-responsive" src="https://md.fbk.info/media/cache/7b/c3/7bc367623b2e166c3092b91b6ef93724.jpg" alt="">
-    </a>
-    <div class="unit-in">
-        <time>@Model.dbcreate.ToString("dd MMMM yyyy HH:mm")</time>
-        <h1>@Model.title</h1>
-        <p>
-            @Model.post_body
-        </p>
+<div class="unit-out col-md-4">
+    <div class="unit">
+        <a href="/blog/post/305/" class="unitImageHolder2x">
+            <img class="img-responsive" src="~/Content/UploadImages/@Model.header_image" alt="">
+        </a>
+        <div class="unit-in">
+            <time>@Model.dbcreate.ToString("dd MMMM yyyy HH:mm")</time>
+            <h1>@Model.title</h1>
+            <p>
+                @Model.post_body
+            </p>
+        </div>
     </div>
 </div>
 

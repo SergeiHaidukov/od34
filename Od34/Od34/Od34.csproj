@@ -282,11 +282,10 @@
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Views\Shared\_PostItem.cshtml" />
     <Content Include="Views\Post\_HtmlEditorPartial.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Thumb\" />
-    <Folder Include="Content\UploadImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

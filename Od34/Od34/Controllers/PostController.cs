@@ -27,7 +27,7 @@ namespace Od34.Controllers
         [Authorize(Roles ="admin")]
         // GET: Post/Create
         public ActionResult Create()
-        {
+        {            
             return View();
         }
 
@@ -63,7 +63,7 @@ namespace Od34.Controllers
 
                 post.ModifyPost();
 
-                return RedirectToAction("Create");
+                return RedirectToAction("Edit", new { id = post._post_entity.id_post });
 
                 //return RedirectToAction("Edit", new { id = post._post_entity.id_post });
             }
@@ -76,24 +76,53 @@ namespace Od34.Controllers
         // GET: Post/Edit/5
         [Authorize(Roles = "admin")]
         public ActionResult Edit(Guid id)
-        {
-            return View();
+        {             
+            PostModel post = PostModel.GetPostById(id);
+            if (post != null)
+                return View(post._post_entity);
+            else
+                return View(new PostModel());
         }
 
         // POST: Post/Edit/5
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Guid id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                PostModel post = PostModel.GetPostById(id);
 
-                return RedirectToAction("Index");
+                UploadedFile[] up_files = UploadControlExtension.GetUploadedFiles("UploadControl", PostControllerUploadControlSettings.UploadValidationSettings);
+
+                if (up_files[0].IsValid)
+                {
+                    if (up_files[0].FileName != "")
+                    {
+                        // Save uploaded file to some location
+                        string file_name = Guid.NewGuid().ToString("N") + Path.GetExtension(up_files[0].FileName);
+                        string file_path = System.Web.HttpContext.Current.Server.MapPath("~/Content/UploadImages/");
+                        string file_full_path = file_path + file_name;
+                        up_files[0].SaveAs(file_full_path);
+                        post._post_entity.header_image = file_name;
+                    }
+                }
+
+                post._post_entity.title = collection["title"];
+                post._post_entity.meta_title = collection["meta_title"];
+                post._post_entity.description = collection["description"];
+                post._post_entity.meta_description = collection["meta_description"];
+                post._post_entity.post_body = HtmlEditorExtension.GetHtml("HtmlEditor");
+                post._post_entity.dbcreate = DateTime.Now;
+                post._post_entity.status = Convert.ToInt32(collection["status"]);
+
+                post.ModifyPost();
+
+                return RedirectToAction("Edit", new { id = id });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", new { id = id });
             }
         }
 
